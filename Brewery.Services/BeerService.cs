@@ -19,7 +19,7 @@ public class BeerService : IBeerService
         return await _beerRepository.GetById(id);
     }
 
-    public async Task<Beer> GetByFilter(decimal? gtAlcoholByVolume, decimal? ltAlcoholByVolume)
+    public async Task<IList<Beer>> GetByFilter(decimal? gtAlcoholByVolume, decimal? ltAlcoholByVolume)
     {
         return await _beerRepository.GetByFilter(gtAlcoholByVolume, ltAlcoholByVolume);
     }

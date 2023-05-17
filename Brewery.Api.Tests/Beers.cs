@@ -46,7 +46,7 @@ public class Beers
         beerRepository.Setup(m => m.GetById(1)).ReturnsAsync(_beers.First);
         beerRepository.Setup(m => m.Put(1, _singleBeer)).ReturnsAsync(_singleBeer);
         beerRepository.Setup(m => m.Post(_singleBeer)).ReturnsAsync(_singleBeer);
-        beerRepository.Setup(m => m.GetByFilter(1,2)).ReturnsAsync(_singleBeer);
+        beerRepository.Setup(m => m.GetByFilter(1,2)).ReturnsAsync(_beers);
 
         
         var beerService = new BeerService(beerRepository.Object);
@@ -93,6 +93,6 @@ public class Beers
         var okResult = result as OkObjectResult;
         Assert.IsNotNull(okResult);
         Assert.AreEqual(200, okResult.StatusCode);
-        Assert.AreEqual("Bitter", ((Brewery.Models.Beer)okResult.Value).Name);
+        Assert.AreEqual("IPA", ((List< Brewery.Models.Beer>)okResult.Value).First().Name);
     }
 }

@@ -23,9 +23,11 @@ public class BeerRepository : IBeerRepository
         return _mapper.Map<Beer>(await _breweryContext.Beers.Where(x => x.Id == id).SingleOrDefaultAsync());
     }
 
-    public async Task<Beer> GetByFilter(decimal? gtAlcoholByVolume, decimal? ltAlcoholByVolume)
+    public async Task<IList<Beer>> GetByFilter(decimal? gtAlcoholByVolume, decimal? ltAlcoholByVolume)
     {
-        return _mapper.Map<Beer>(await _breweryContext.Beers.Where(x => x.PercentageAlcoholByVolume >= gtAlcoholByVolume && x.PercentageAlcoholByVolume <= ltAlcoholByVolume ).SingleAsync());
+        return _mapper.Map<IList<Beer>>(await _breweryContext.Beers
+            .Where(x => (gtAlcoholByVolume == null || x.PercentageAlcoholByVolume >= gtAlcoholByVolume) 
+                        && (ltAlcoholByVolume == null || x.PercentageAlcoholByVolume <= ltAlcoholByVolume) ).ToListAsync());
     }
 
     public async Task<Beer> Put(long id, Beer beer)
